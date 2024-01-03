@@ -21,6 +21,16 @@ export default function SetAvatar() {
     draggable: true,
     theme: "dark",
   };
+
+  useEffect(
+    () => async () => {
+      if (!localStorage.getItem("disy-app-user")) {
+        navigate("/login");
+      }
+    },
+    []
+  );
+
   const setProfilePicture = async () => {
     if (selectedAvatar === undefined) {
       toast.error("Please select an avatar", toastOptions);

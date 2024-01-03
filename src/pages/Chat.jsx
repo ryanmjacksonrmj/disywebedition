@@ -3,25 +3,74 @@ import styled from "styled-components";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { allUsersRoute } from "../utils/APIRoutes";
+import Contacts from "../components/Contacts";
 
 function Chat() {
   const navigate = useNavigate();
   const [contacts, setContacts] = useState([]);
-  useEffect(() => async () => {
-    if (!localStorage.getItem("disy-app-user")) {
-      navigate("/login");
-    } else {
-      setCurrentUser(await JSON.parse(localStorage.getItem("disy-app-user")));
-    }
+  const [currentUser, setCurrentUser] = useState(undefined);
+  // useEffect(
+  //   () => async () => {
+  //     if (!localStorage.getItem("disy-app-user")) {
+  //       navigate("/login");
+  //     } else {
+  //       setCurrentUser(await JSON.parse(localStorage.getItem("disy-app-user")));
+  //     }
+  //   },
+  //   []
+  // );
+  // useEffect(
+  //   () => async () => {
+  //     console.log("OTHER CURRENTUSER", currentUser, "OTHER CURRENTUSER");
+  //     if (currentUser) {
+  //       if (currentUser.isAvatarImageSet) {
+  //         const data = await axios.get(`${allUsersRoute}/${currentUser._id}`);
+  //         console.log("DATA", data, "DATA");
+  //         setContacts(data.data);
+  //       } else {
+  //         console.log("THISPATH");
+  //         navigate("/setAvatar");
+  //       }
+  //     }
+  //   },
+  //   [currentUser]
+  // );
+
+  useEffect(() => {
+    const checkUser = async () => {
+      if (!localStorage.getItem("disy-app-user")) {
+        navigate("/login");
+      } else {
+        setCurrentUser(await JSON.parse(localStorage.getItem("disy-app-user")));
+      }
+    };
+
+    checkUser();
   }, []);
-	useEffect(() => async() => {
-		if(currentUser) {
-			const data = await axios.get(`${allUsersRoute}`)
-		}
-	}, [currentUser])
+
+  useEffect(() => {
+    const fetchData = async () => {
+      console.log("OTHER CURRENTUSER", currentUser, "OTHER CURRENTUSER");
+      if (currentUser) {
+        if (currentUser.isAvatarImageSet) {
+          const data = await axios.get(`${allUsersRoute}/${currentUser._id}`);
+          console.log("DATA", data, "DATA");
+          setContacts(data.data);
+        } else {
+          console.log("THISPATH");
+          navigate("/setAvatar");
+        }
+      }
+    };
+
+    fetchData();
+  }, [currentUser]);
+
   return (
     <Container>
-      <div className="container">Chat</div>
+      <div className="container">
+        <Contacts contacts={contacts} currentUser={currentUser} />
+      </div>
     </Container>
   );
 }

@@ -1,5 +1,5 @@
 import { Link, useNavigate } from "react-router-dom";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import FormContainer from "../components/FormContainer";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -18,11 +18,11 @@ function Login() {
     theme: "dark",
   };
 
-  // useEffect(() => {
-  //   if (localStorage.getItem("disy-app-user")) {
-  //     navigate("/");
-  //   }
-  // }, []);
+  useEffect(() => {
+    if (localStorage.getItem("disy-app-user")) {
+      navigate("/");
+    }
+  }, []);
 
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -47,7 +47,7 @@ function Login() {
     if (password === "") {
       toast.error("Username and Password is required", toastOptions);
       return false;
-    } else if (username.length === "") {
+    } else if (username === "") {
       toast.error("Username and Password is required", toastOptions);
       return false;
     }
@@ -65,7 +65,7 @@ function Login() {
           <div className="brand">
             <h1>DISY</h1>
           </div>
-          <input type="text" placeholder="Username" name="username" onChange={(e) => handleChange(e)} />
+          <input type="text" placeholder="Username" name="username" onChange={(e) => handleChange(e)} min="3"/>
           <input type="password" placeholder="Password" name="password" onChange={(e) => handleChange(e)} />
           <button type="submit">Login</button>
           <span>
