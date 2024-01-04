@@ -4,37 +4,15 @@ import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { allUsersRoute } from "../utils/APIRoutes";
 import Contacts from "../components/Contacts";
+import Welcome from "../components/Welcome";
+import ChatContainer from "../components/ChatContainer";
 
 function Chat() {
   const navigate = useNavigate();
   const [contacts, setContacts] = useState([]);
   const [currentUser, setCurrentUser] = useState(undefined);
-  // useEffect(
-  //   () => async () => {
-  //     if (!localStorage.getItem("disy-app-user")) {
-  //       navigate("/login");
-  //     } else {
-  //       setCurrentUser(await JSON.parse(localStorage.getItem("disy-app-user")));
-  //     }
-  //   },
-  //   []
-  // );
-  // useEffect(
-  //   () => async () => {
-  //     console.log("OTHER CURRENTUSER", currentUser, "OTHER CURRENTUSER");
-  //     if (currentUser) {
-  //       if (currentUser.isAvatarImageSet) {
-  //         const data = await axios.get(`${allUsersRoute}/${currentUser._id}`);
-  //         console.log("DATA", data, "DATA");
-  //         setContacts(data.data);
-  //       } else {
-  //         console.log("THISPATH");
-  //         navigate("/setAvatar");
-  //       }
-  //     }
-  //   },
-  //   [currentUser]
-  // );
+  const [currentChat, setCurrentChat] = useState(undefined);
+  const [isLoaded, setIsLoaded] = useState(false);
 
   useEffect(() => {
     const checkUser = async () => {
@@ -42,6 +20,7 @@ function Chat() {
         navigate("/login");
       } else {
         setCurrentUser(await JSON.parse(localStorage.getItem("disy-app-user")));
+        setIsLoaded(true);
       }
     };
 
@@ -50,14 +29,11 @@ function Chat() {
 
   useEffect(() => {
     const fetchData = async () => {
-      console.log("OTHER CURRENTUSER", currentUser, "OTHER CURRENTUSER");
       if (currentUser) {
         if (currentUser.isAvatarImageSet) {
           const data = await axios.get(`${allUsersRoute}/${currentUser._id}`);
-          console.log("DATA", data, "DATA");
           setContacts(data.data);
         } else {
-          console.log("THISPATH");
           navigate("/setAvatar");
         }
       }
@@ -66,10 +42,20 @@ function Chat() {
     fetchData();
   }, [currentUser]);
 
+  const handleChatChange = (chat) => {
+    setCurrentChat(chat);
+  };
+
   return (
     <Container>
       <div className="container">
-        <Contacts contacts={contacts} currentUser={currentUser} />
+        <Contacts contacts={contacts} currentUser={currentUser} changeChat={handleChatChange} />
+        {console.log("LOGGING", isLoaded, currentChat, "LOGGING")}
+        {isLoaded && currentChat === undefined ? (
+          <Welcome currentUser={currentUser} />
+        ) : (
+          <ChatContainer currentChat={currentChat} />
+        )}
       </div>
     </Container>
   );
@@ -85,7 +71,7 @@ const Container = styled.div`
   align-items: center;
   background-color: lightblue;
   .container {
-    height: 85wh;
+    height: 85vh;
     width: 85vw;
     background-color: lightgreen;
     display: grid;
@@ -93,8 +79,6 @@ const Container = styled.div`
     @media screen and (min-width: 720px) and (max-width: 1080px) {
       grid-template-columns: 35% 65%;
     }
-    /* @media screen and (min-width: 720px) and (max-width: 1080px);
-		grid-template-columns: 35% 65%; ADD 360-480 for phones...*/
   }
 `;
 
