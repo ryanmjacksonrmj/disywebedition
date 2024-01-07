@@ -65,7 +65,7 @@ function Login() {
           <div className="brand">
             <h1>DISY</h1>
           </div>
-          <input type="text" placeholder="Username" name="username" onChange={(e) => handleChange(e)} min="3"/>
+          <input type="text" placeholder="Username" name="username" onChange={(e) => handleChange(e)} min="3" />
           <input type="password" placeholder="Password" name="password" onChange={(e) => handleChange(e)} />
           <button type="submit">Login</button>
           <span>

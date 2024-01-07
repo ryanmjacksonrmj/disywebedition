@@ -1,4 +1,3 @@
-import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import { BiPowerOff } from "react-icons/bi";
@@ -23,7 +22,7 @@ const Button = styled.button`
   align-items: center;
   padding: 0.5rem;
   border-radius: 0.5rem;
-  background-color: fuchsia;
+  background-color: black;
   border: none;
   cursor: pointer;
   svg {

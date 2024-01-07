@@ -1,10 +1,37 @@
 import styled from "styled-components";
 import Logout from "./Logout";
 import ChatInput from "./ChatInput";
-import Messages from "./Messages";
+import axios from "axios";
+import { getAllMessagesRoute, sendMessageRoute } from "../utils/APIRoutes";
+import { useState, useEffect } from "react";
+// import Messages from "./Messages";
 
-export default function ChatContainer({ currentChat }) {
-  const handleSendMsg = async (msg) => {};
+export default function ChatContainer({ currentChat, currentUser }) {
+  const [messages, setMessages] = useState([]);
+  useEffect(() => {
+    const getMessages = async () => {
+      try {
+        const response = await axios.post(getAllMessagesRoute, {
+          from: currentUser._id,
+          to: currentChat._id,
+        });
+        console.log("RESPONSE.DATA", response.data, "RESPONSE.DATA");
+        setMessages(response.data);
+        console.log("MESSAGES", messages, "MESSAGES");
+      } catch (error) {
+        console.log("Error fetching messages:", error);
+      }
+    };
+    getMessages();
+  }, [currentChat]);
+
+  const handleSendMsg = async (msg) => {
+    await axios.post(sendMessageRoute, {
+      from: currentUser._id,
+      to: currentChat._id,
+      message: msg,
+    });
+  };
   return (
     <>
       {currentChat && (
@@ -20,7 +47,20 @@ export default function ChatContainer({ currentChat }) {
             </div>
             <Logout />
           </div>
-          <Messages />
+          <div className="chat-messages">
+            {messages.map((message) => {
+              return (
+                <div key={message._id}>
+                  <div className={`message ${message.fromSelf ? "sended" : "received"}`}>
+                    <div className="content">
+                      <p>{message.message}</p>
+                    </div>
+                  </div>
+                </div>
+              );
+            })}
+          </div>
+          {/* <Messages /> */}
           <ChatInput handleSendMsg={handleSendMsg} />
         </Container>
       )}

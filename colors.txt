@@ -1,0 +1,11 @@
+07BEB8 Darkest Blue
+3DCCC7
+68D8D6
+9CEAEF
+C4FFF9 Lightest Blue
+
+CC5803 Darkest Orange
+E2711D
+FF9505
+FFB627
+FFC971 Lightest Orange

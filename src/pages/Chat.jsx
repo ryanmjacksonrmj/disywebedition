@@ -23,7 +23,6 @@ function Chat() {
         setIsLoaded(true);
       }
     };
-
     checkUser();
   }, []);
 
@@ -50,11 +49,10 @@ function Chat() {
     <Container>
       <div className="container">
         <Contacts contacts={contacts} currentUser={currentUser} changeChat={handleChatChange} />
-        {console.log("LOGGING", isLoaded, currentChat, "LOGGING")}
         {isLoaded && currentChat === undefined ? (
           <Welcome currentUser={currentUser} />
         ) : (
-          <ChatContainer currentChat={currentChat} />
+          <ChatContainer currentChat={currentChat} currentUser={currentUser} />
         )}
       </div>
     </Container>
@@ -69,11 +67,10 @@ const Container = styled.div`
   justify-content: center;
   gap: 1rem;
   align-items: center;
-  background-color: lightblue;
   .container {
-    height: 85vh;
-    width: 85vw;
-    background-color: lightgreen;
+    height: 100vh;
+    width: 100vw;
+    background-color: #ffc971;
     display: grid;
     grid-template-columns: 25% 75%;
     @media screen and (min-width: 720px) and (max-width: 1080px) {

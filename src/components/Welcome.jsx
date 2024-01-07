@@ -1,10 +1,8 @@
 import styled from "styled-components";
-import Robot from "../assets/robot.gif";
 
 export default function Welcome({ currentUser }) {
   return (
     <Container>
-      <img src={Robot} alt="Robot" />
       <h1>
         Welcome, <span>{currentUser.username}!</span>
       </h1>
@@ -18,11 +16,12 @@ const Container = styled.div`
   justify-content: center;
   align-items: center;
   flex-direction: column;
-  color: white;
+  color: #c4fff9;
+  font-size: 2rem;
   img {
     height: 20rem;
   }
   span {
-    color: blueviolet;
+    color: #07beb8;
   }
 `;

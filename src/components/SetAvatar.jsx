@@ -14,6 +14,7 @@ export default function SetAvatar() {
   const [avatars, setAvatars] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [selectedAvatar, setSelectedAvatar] = useState(undefined);
+  console.log("SELECTEDAVATAR", selectedAvatar, "SELECTEDAVATAR");
   const toastOptions = {
     position: "bottom-right",
     autoClose: 8000,
@@ -22,33 +23,37 @@ export default function SetAvatar() {
     theme: "dark",
   };
 
-  useEffect(
-    () => async () => {
+  useEffect(() => {
+    const checkLocalStorage = async () => {
       if (!localStorage.getItem("disy-app-user")) {
         navigate("/login");
       }
-    },
-    []
-  );
+    };
+    checkLocalStorage();
+  }, []);
 
   const setProfilePicture = async () => {
     if (selectedAvatar === undefined) {
       toast.error("Please select an avatar", toastOptions);
     } else {
       const user = await JSON.parse(localStorage.getItem("disy-app-user"));
-      const data = await axios.post(`${setAvatarRoute}/${user._id}`, { image: avatars[selectedAvatar] });
-      if (data.isSet) {
+      console.log("USER", user, "USER");
+      try {
+        const { data } = await axios.post(`${setAvatarRoute}/${user._id}`, { image: avatars[selectedAvatar] });
+        console.log("DATTTTAAAAAA", data, "DATA");
         user.isAvatarImageSet = true;
         user.avatarImage = data.image;
+        console.log("SECOND USER", user, "SECOND USER");
         localStorage.setItem("disy-app-user", JSON.stringify(user));
         navigate("/");
-      } else {
+      } catch (error) {
+        console.error("Error:", error);
         toast.error("Error setting avatar. Please try again.", toastOptions);
       }
     }
   };
-  useEffect(
-    () => async () => {
+  useEffect(() => {
+    const generateAvatars = async () => {
       const data = [];
       for (let i = 0; i < 4; i++) {
         const image = await axios.get(`${api}/${Math.round(Math.random() * 1000)}`);
@@ -59,9 +64,9 @@ export default function SetAvatar() {
       }
       setAvatars(data);
       setIsLoading(false);
-    },
-    []
-  );
+    };
+    generateAvatars();
+  }, []);
   return (
     <>
       {isLoading ? (
@@ -73,6 +78,7 @@ export default function SetAvatar() {
           <div className="title-container">
             <h1>Pick an avatar as your profile picture</h1>
           </div>
+          <div></div>
           <div className="avatars">
             {avatars.map((avatar, index) => {
               return (
@@ -86,6 +92,7 @@ export default function SetAvatar() {
               );
             })}
           </div>
+          <div></div>
           <button className="submit-btn" onClick={setProfilePicture}>
             Set as Profile Picture
           </button>
@@ -103,7 +110,7 @@ const Container = styled.div`
   align-items: center;
   flex-direction: column;
   gap: 3rem;
-  background-color: white;
+  background-color: #c4fff9;
   height: 100vh;
   width: 100vw;
   .loader {
@@ -111,12 +118,14 @@ const Container = styled.div`
   }
   .title-container {
     h1 {
-      color: blue;
+      color: #ff9505;
+      font-size: 4rem;
+      padding: 2rem;
     }
   }
   .avatars {
     display: flex;
-    gap: 2rem;
+    gap: 3rem;
     .avatar {
       border: 0.4 rem solid transparent;
       padding: 0.4rem;
@@ -124,26 +133,28 @@ const Container = styled.div`
       display: flex;
       justify-content: center;
       align-items: center;
-      transition: 0.5s ease-in-out;
+      transition: 0.3s ease-in-out;
       img {
-        height: 6rem;
+        height: 8rem;
       }
     }
     .selected {
-      border: 0.4rem solid pink;
+      border: 0.4rem solid #ffc971;
     }
   }
   .submit-btn {
-    background-color: green;
-    color: pink;
+    background-color: #3dccc7;
+    color: #ffc971;
     padding: 1rem 2rem;
     border: none;
     cursor: pointer;
-    border-radius: 0.4rem;
-    font-size: 1rem;
-    transition: 0.5s ease-in-out;
+    border-radius: 0.75rem;
+    font-size: 2.5rem;
+    font-weight: bolder;
+    transition: 0.3s ease-in-out;
     &:hover {
-      background-color: orange;
+      background-color: #ffc971;
+      color: #3dccc7;
     }
   }
 `;

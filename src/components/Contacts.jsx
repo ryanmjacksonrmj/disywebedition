@@ -56,19 +56,19 @@ export default function Contacts({ contacts, currentUser, changeChat }) {
 }
 const Container = styled.div`
   display: grid;
-  grid-template-rows: 10% 75% 15%;
+  grid-template-rows: 10% 83% 7%;
   overflow: hidden;
-  background: pink;
+  background: #c4fff9;
   .brand {
     display: flex;
     align-items: center;
     justify-content: center;
     gap: 1rem;
     img {
-      height: 2rem;
+      height: 3rem;
     }
     h3 {
-      color: blue;
+      color: #ffc971;
       text-transform: uppercase;
     }
   }
@@ -81,25 +81,25 @@ const Container = styled.div`
     &::-webkit-scrollbar {
       width: 0.2rem;
       &-thumb {
-        background-color: orange;
+        background-color: #cc5803;
         width: 0.1rem;
         border-radius: 1rem;
       }
     }
     .contact {
-      background-color: magenta;
-      min-height: 5rem;
+      background-color: #07beb8;
+      min-height: 2rem;
       width: 90%;
       cursor: pointer;
-      border-radius: 0.2rem;
+      border-radius: 3rem;
       padding: 0.4rem;
       gap: 1rem;
       align-items: center;
       display: flex;
-      transition: 0.5s ease-in-out;
+      transition: 0.4s ease-in-out;
       .avatar {
         img {
-          height: 3rem;
+          height: 2rem;
         }
       }
       .username {
@@ -109,24 +109,24 @@ const Container = styled.div`
       }
     }
     .selected {
-      background-color: black;
+      background-color: #ff9505;
     }
   }
   .current-user {
-    background-color: green;
+    background-color: #ffb627;
     display: flex;
     justify-content: center;
     align-items: center;
     gap: 2rem;
     .avatar {
       img {
-        height: 4rem;
+        height: 2rem;
         max-inline-size: 100%;
       }
     }
     .username {
       h2 {
-        color: yellow;
+        color: #07beb8;
       }
     }
     @media screen and (min-width: 720px) and (max-width: 1080px) {
