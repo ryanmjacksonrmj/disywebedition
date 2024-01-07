@@ -46,6 +46,12 @@ const Container = styled.div`
   background-color: #07beb8;
   padding: 0 2rem;
   border-radius: 2rem;
+  height: 4rem;
+  @media screen and (min-width: 720px) and (max-width: 1080px) {
+    padding: 0 1rem;
+    gap: 1rem;
+  }
+
   .button-container {
     display: flex;
     align-items: center;
@@ -97,27 +103,32 @@ const Container = styled.div`
     background-color: white;
     input {
       width: 90%;
-      height: 60%;
       background-color: transparent;
       color: black;
       border: none;
       padding-left: 1rem;
       font-size: 1.2rem;
       &::selection {
-        background-color: #9186f3;
+        background-color: #c4fff9;
       }
       &:focus {
         outline: none;
       }
     }
     button {
-      padding: 0.3rem 2rem;
+      padding: 0.3rem 2.1rem;
       border-radius: 2rem;
       display: flex;
       justify-content: center;
       align-items: center;
       background-color: #cc5803;
       border: none;
+      @media screen and (min-width: 720px) and (max-width: 1080px) {
+        padding: 0.3rem 1rem;
+        svg {
+          font-size: 1rem;
+        }
+      }
       svg {
         font-size: 2rem;
         color: white;

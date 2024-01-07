@@ -1,6 +1,5 @@
 import { useState, useEffect } from "react";
 import styled from "styled-components";
-import Logo from "../assets/logo.svg";
 export default function Contacts({ contacts, currentUser, changeChat }) {
   const [currentUserName, setCurrentUserName] = useState(undefined);
   const [currentUserImage, setCurrentUserImage] = useState(undefined);
@@ -20,7 +19,6 @@ export default function Contacts({ contacts, currentUser, changeChat }) {
       {currentUserImage && currentUserName && (
         <Container>
           <div className="brand">
-            <img src={Logo} alt="logo" />
             <h3>DISY</h3>
           </div>
           <div className="contacts">
@@ -64,12 +62,13 @@ const Container = styled.div`
     align-items: center;
     justify-content: center;
     gap: 1rem;
-    img {
-      height: 3rem;
-    }
+
     h3 {
-      color: #ffc971;
+      color: #ff9505;
       text-transform: uppercase;
+      font-size: 4rem;
+      font-weight: 900;
+      letter-spacing: 0.1rem;
     }
   }
   .contacts {

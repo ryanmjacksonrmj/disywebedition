@@ -9,3 +9,7 @@ E2711D
 FF9505
 FFB627
 FFC971 Lightest Orange
+
+
+3DCCC7
+ffc971
